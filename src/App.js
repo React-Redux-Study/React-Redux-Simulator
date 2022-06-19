@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./Routes/Layout/Footer";
 import Header from "./Routes/Layout/Header";
 
-import Register from "./Routes/Template/Register";
+import Register from "./Routes/Register/Register";
 import Template from "./Routes/Template/Template";
 
 const App = () => {
