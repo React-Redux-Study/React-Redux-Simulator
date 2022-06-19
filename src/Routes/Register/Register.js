@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch } from "react-redux";
 
-import MaxMirrorComponent from "../../Components/Register/MaxMirrorComponent";
+import MaxMirrorComponent from "../../Components/Register/MirrorKeyComponent";
 
 import { SET_MIRRORKEY } from "../../Store/Register/Register";
 
@@ -10,19 +10,19 @@ const Register = () => {
     const dispatch = useDispatch();
 
     // const [ maxMirrorSize, setMaxMirrorSize ] = useState(0);
-    const [mirrorKey, setMirrorKey] = useState([]);
+    const [mirrorKey, setMirrorKey] = useState("");
 
     useEffect( () => {
 
     }, [])
 
     const onChangeMirrorKey = (e) =>{
-        setMirrorKey([...mirrorKey, String(e.target.value)]);
+        setMirrorKey(String(e.target.value));
     }
 
     const onClickMirrorKey = (e) => {
         e.preventDefault();
-        dispatch(SET_MIRRORKEY(mirrorKey));
+        dispatch(SET_MIRRORKEY(String(mirrorKey)));
     }
 
     const onClickMetaData = () => {
@@ -74,10 +74,8 @@ const Register = () => {
                             Add
                         </button>
                     </div>
-                </div>
-
-                <div>
                     <MaxMirrorComponent />
+
                 </div>
 
                 <div>
@@ -103,10 +101,6 @@ const Register = () => {
                             Add
                         </button>
                     </div>
-                </div>
-
-                <div>
-                    meatdata
                 </div>
 
                 <div className="flex justify-end">
