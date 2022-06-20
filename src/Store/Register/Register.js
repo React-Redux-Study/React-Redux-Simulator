@@ -18,11 +18,11 @@ export const RegisterSlice = createSlice(
             },
 
             SET_METADATA:(state, actions) =>{
-                state.metaData = [...state.mirrorKey ,String(actions.payload)];
+                state.metaData = [...state.metaData ,actions.payload];
             },
 
             DELETE_METADATA:(state, actions) =>{
-                state.mirrorKey = state.mirrorKey.filter((element) => element !== actions.payload );
+                state.metaData = state.metaData.filter((element) => JSON.stringify(element) !== JSON.stringify(actions.payload) );
             }
         }
     }

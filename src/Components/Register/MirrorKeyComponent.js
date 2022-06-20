@@ -1,4 +1,4 @@
-import React , {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { CgClose } from "react-icons/cg";
@@ -27,16 +27,21 @@ const MirrorKeyComponent = () => {
     선언부는 해당 redux안에 있는 변수값들을 지정을 해야된다
     const initailstate = useSelector( state => state를 정의한 원 redux store name 을 정의)
     */
+
     const { mirrorKey } = useSelector(state => state.register);
 
     return (
-        mirrorKey !== undefined && (
+        mirrorKey !== undefined ? (
             <div className="py-2 w-full grid grid-cols-1 md:grid-cols-8 gap-4">
                 {
                     mirrorKey.map((value,key) => (
                         <MirrorComponent key={key} props={ {key,value} } />
                     ))
                 }
+            </div>
+        ) : (
+            <div>
+                
             </div>
         )
     )
