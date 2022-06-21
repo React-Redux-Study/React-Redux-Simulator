@@ -1,4 +1,4 @@
-import {promise} from "../Common";
+import {response} from "../Common";
 
 export const register = async (data) => {
     /**
@@ -16,10 +16,8 @@ export const register = async (data) => {
         headers: {
             "Content-Type": "application/json;charset=UTF-8"
         },
-        body: JSON.stringify({
-            data
-        })
+        body: JSON.stringify(data)
     }
 
-    return await promise("/api/dashboard", option);
+    return await response("api/dashboard", option);
 }

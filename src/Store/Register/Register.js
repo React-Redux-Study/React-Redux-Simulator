@@ -4,25 +4,25 @@ export const RegisterSlice = createSlice(
     {
         name: "register",
         initialState:{
-            mirrorKey:[],
-            metaData:[]
+            mirrorKeyRedux:[],
+            metaDataRedux:[]
         },
         reducers:{
 
             SET_MIRRORKEY:(state, actions) => {
-                state.mirrorKey = [...state.mirrorKey ,String(actions.payload)];
+                state.mirrorKeyRedux = [...state.mirrorKeyRedux ,String(actions.payload)];
             },
 
             DELETE_MIRRORKEY:(state, actions) => {
-                state.mirrorKey = state.mirrorKey.filter((element) => element !== String(actions.payload) );
+                state.mirrorKeyRedux = state.mirrorKeyRedux.filter((element) => element !== String(actions.payload) );
             },
 
             SET_METADATA:(state, actions) =>{
-                state.metaData = [...state.metaData ,actions.payload];
+                state.metaDataRedux = [...state.metaDataRedux ,actions.payload];
             },
 
             DELETE_METADATA:(state, actions) =>{
-                state.metaData = state.metaData.filter((element) => JSON.stringify(element) !== JSON.stringify(actions.payload) );
+                state.metaDataRedux = state.metaDataRedux.filter((element) => JSON.stringify(element) !== JSON.stringify(actions.payload) );
             }
         }
     }

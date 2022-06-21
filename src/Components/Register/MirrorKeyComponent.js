@@ -13,9 +13,11 @@ const MirrorComponent = ({props}) => {
     }
 
     return (
-        <div className="w-full px-2 text-sm rounded-full border border-gray-300 tracert flex justify-between items-center">
+        <div className="w-full px-4 py-1 text-sm rounded-full border border-gray-300 tracert flex justify-between items-center">
             <label>{props.value}</label>
-            <CgClose className="cursor-pointer" onClick={onClickRemove} />
+            <div className="cursor-pointer bg-gray-800 text-gray-300 rounded-full p-1">
+                <CgClose className="cursor-pointer " onClick={onClickRemove} />
+            </div>
         </div>
     )
 }
@@ -28,13 +30,13 @@ const MirrorKeyComponent = () => {
     const initailstate = useSelector( state => state를 정의한 원 redux store name 을 정의)
     */
 
-    const { mirrorKey } = useSelector(state => state.register);
+    const { mirrorKeyRedux } = useSelector(state => state.register);
 
     return (
-        mirrorKey !== undefined ? (
+        mirrorKeyRedux !== undefined ? (
             <div className="py-2 w-full grid grid-cols-1 md:grid-cols-8 gap-4">
                 {
-                    mirrorKey.map((value,key) => (
+                    mirrorKeyRedux.map((value,key) => (
                         <MirrorComponent key={key} props={ {key,value} } />
                     ))
                 }

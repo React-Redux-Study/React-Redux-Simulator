@@ -1,25 +1,37 @@
 import React, {useEffect, useState} from "react";
-import { useDispatch } from "react-redux";
-import MetaDataComponent from "../../Components/Register/MetaDataComponent";
+import { useDispatch, useSelector } from "react-redux";
 
+import { useNavigate } from "react-router-dom";
+
+import MetaDataComponent from "../../Components/Register/MetaDataComponent";
 import MaxMirrorComponent from "../../Components/Register/MirrorKeyComponent";
 
+import { SET_ERROR_MODAL_MESSAGE } from "../../Store/Modal/ErrorModal";
 import { SET_METADATA, SET_MIRRORKEY } from "../../Store/Register/Register";
+
+import { register } from "../../API/Template/Template";
+import ErrorComponent from "../../Components/Register/ErrorComponent";
 
 const Register = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    //
+    const [errors, setErrors] = useState({});
     //
     const selectMetaList = ["String", "Integer", "Float"];
     const [selectMeta, setSelectMeta] = useState("");
     const [metaKey, setMetaKey] = useState("");
-    const [metaSize, setMetaSize] = useState(0);
+    const [metaSize, setMetaSize] = useState(1);
     //
     const [mirrorKey, setMirrorKey] = useState("");
     //
     const [title , setTitle] = useState("");
     const [filePath, setFilePath] = useState("");
     const [content, setContent] = useState("");
+    //
+    const { metaDataRedux, mirrorKeyRedux } = useSelector(state => state.register);
+
     //
     useEffect( () => {
         setSelectMeta(selectMetaList[0]);
@@ -29,20 +41,21 @@ const Register = () => {
         if(mirrorKey.length > 0){
             dispatch(SET_MIRRORKEY(String(mirrorKey)));
             setMirrorKey("");
+            errors.mirrorKeyRedux = null;
         }
     }
 
     const addMetaData = () => {
         if( metaKey.length > 0 && 0 < Number(metaSize) && Number(metaSize) < 10){
             dispatch(SET_METADATA({
-                select:selectMeta, 
+                type:selectMeta, 
                 key:metaKey, 
                 size:metaSize})
             );
             setMetaKey("");
-            setMetaSize(0);
+            setMetaSize(1);
+            errors.metaDataRedux = null;
         }
-
     }
     //
     const onChangeTitle = (e) => {
@@ -78,6 +91,12 @@ const Register = () => {
             addMirrorKey();
         }
     }
+
+    const onKeyPressMetaData = (e) => {
+        if(e.key === "Enter"){
+            addMetaData();
+        }
+    }
     //
     const onClickMirrorKey = (e) => {
         e.preventDefault();
@@ -89,7 +108,64 @@ const Register = () => {
         addMetaData();
     }
 
+    const onClickExit = () => {
+        navigate("/");
+    }
+    
+    //
+    const onValid = () => {
+        const error = {}
+
+        if(!title){
+            error.title = "제목을 입력하세요.";
+        }
+
+        if(!content){
+            error.content = "내용을 입력하세요.";
+        }
+
+        if(!filePath){
+            error.path = "파일경로를 입력하세요.";
+        }
+        if(!mirrorKeyRedux.length){
+            error.mirrorKeyRedux = "미러키값을 입력하세요.";
+        }
+
+        if(!metaDataRedux.length){
+            error.metaDataRedux = "메타데이터값을 입력하세요.";
+        }
+
+        setErrors(error);
+
+        let check = true;
+        if(Object.keys(error).length){
+           check = false; 
+        }
+        console.log(check, error);
+        return check;
+    }
+    //
     const onClickRegister = async () => {
+        
+        if(onValid()){
+            const data = {
+                title:title,
+                content:content,
+                path:filePath.replaceAll("\\","/"),
+                mirror:mirrorKeyRedux.length,
+                mirrorRegex: mirrorKeyRedux.toString(),
+                raw:JSON.stringify(metaDataRedux)
+            };
+            
+            const response = await register(data);
+            
+            if(response.state){
+                navigate("/");
+            }else{
+                dispatch(SET_ERROR_MODAL_MESSAGE("입력 데이터가 올바르지 않습니다."));  
+            }
+        }
+        //dispatch(SET_ERROR_MODAL_MESSAGE("나는 바보당\n 춘식이는 귀엽다."));  
 
     }
 
@@ -105,8 +181,10 @@ const Register = () => {
                             type="text"
                             value={title}
                             onChange={onChangeTitle}
+                            required={true}
                         />
                     </div>
+                    <ErrorComponent message={errors?.title}/>
 
                 </div>
                 <div>
@@ -119,7 +197,7 @@ const Register = () => {
                             onChange={onChangeFilePath}
                         />
                     </div>
-
+                    <ErrorComponent message={errors?.path}/>
                 </div>
                 <div>
                     <label className="w-full py-2 px-1 font-bold">Content</label>
@@ -131,6 +209,8 @@ const Register = () => {
                             onChange={onChangeContent}
                         />
                     </div>
+                    <ErrorComponent message={errors?.content}/>
+
                 </div>
 
                 <div>
@@ -148,6 +228,7 @@ const Register = () => {
                             Add
                         </button>
                     </div>
+                    <ErrorComponent message={errors?.mirrorKeyRedux}/>
                     <MaxMirrorComponent />
 
                 </div>
@@ -174,6 +255,7 @@ const Register = () => {
                             type="number"
                             value={metaSize}
                             onChange={onChangeMetaSize}
+                            onKeyPress={onKeyPressMetaData}
                         />
                         </div>
                         
@@ -181,11 +263,13 @@ const Register = () => {
                             Add
                         </button>
                     </div>
+                    <ErrorComponent message={errors?.metaDataRedux}/>
                     <MetaDataComponent  />
 
                 </div>
 
-                <div className="flex justify-end">
+                <div className="flex justify-between">
+                    <button className="w-32 px-4 py-2 border bg-gray-50 hover:bg-gray-100" onClick={onClickExit}>exit</button>
                     <button className="w-32 px-4 py-2 border hover:bg-gray-100" onClick={onClickRegister} >register</button>
                 </div>
             </div>
