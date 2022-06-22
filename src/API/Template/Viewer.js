@@ -1,6 +1,6 @@
 import {response} from "../Common";
 
-export const getDashboard = async (data) => {
+export const getViewer =async (data) => {
     const option = {
         method: "GET",
         headers: {
@@ -8,5 +8,5 @@ export const getDashboard = async (data) => {
         },
     }
 
-    return await response(`api/dashboard?page=${data.page}&size=${data.size}`, option);
+    return await response(`api/dashboard/${data}`, option);
 }

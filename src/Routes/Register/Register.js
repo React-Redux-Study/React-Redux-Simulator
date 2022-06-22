@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import MaxMirrorComponent from "../../Components/Register/MirrorKeyComponent";
 import { SET_ERROR_MODAL_MESSAGE } from "../../Store/Modal/ErrorModal";
 import { SET_METADATA, SET_MIRRORKEY } from "../../Store/Register/Register";
 
-import { register } from "../../API/Template/Template";
+import { register } from "../../API/Register/Register";
 import ErrorComponent from "../../Components/Register/ErrorComponent";
 
 const Register = () => {
@@ -19,7 +19,7 @@ const Register = () => {
     //
     const [errors, setErrors] = useState({});
     //
-    const selectMetaList = ["String", "Integer", "Float"];
+    const selectMetaList = useRef(["String", "Integer", "Float"]);
     const [selectMeta, setSelectMeta] = useState("");
     const [metaKey, setMetaKey] = useState("");
     const [metaSize, setMetaSize] = useState(1);
@@ -35,7 +35,7 @@ const Register = () => {
     //
     useEffect( () => {
         setSelectMeta(selectMetaList[0]);
-    }, [] )
+    },[selectMetaList])
     //
     const addMirrorKey = () => {
         if(mirrorKey.length > 0){
@@ -141,7 +141,7 @@ const Register = () => {
         if(Object.keys(error).length){
            check = false; 
         }
-        console.log(check, error);
+        //console.log(check, error);
         return check;
     }
     //
@@ -165,7 +165,6 @@ const Register = () => {
                 dispatch(SET_ERROR_MODAL_MESSAGE("입력 데이터가 올바르지 않습니다."));  
             }
         }
-        //dispatch(SET_ERROR_MODAL_MESSAGE("나는 바보당\n 춘식이는 귀엽다."));  
 
     }
 
@@ -238,7 +237,7 @@ const Register = () => {
                     <div className="w-full flex space-x-4 h-10">
                         <select className="w-32 px-4 py-2 border" onChange={onChangeSelectMeta} value={selectMeta}>
                             {
-                                selectMetaList.map( (item)=> (
+                                selectMetaList.current.map( (item)=> (
                                     <option key={item} value={item}>{item}</option>
                                 ))
                             }

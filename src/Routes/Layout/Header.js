@@ -13,13 +13,16 @@ const Header = () => {
     }
 
     return (
-        <div className="z-100 fixed inset-x-0 top-0">
+        <div className="z-50 fixed inset-x-0 top-0">
             <div className="bg-white flex items-center justify-start w-full p-2 shadow">
                 <div className="p-2 text-2xl font-bold">
                     <button onClick={onClickSimulator}>Simulator</button>
                 </div>
                 <div className="px-10">
-                    <button onClick={onClickRegister}>Register</button>
+                    <button className="hover:border-gray-400 hover:border-b-2 hover:pt-1" onClick={onClickSimulator}>Template</button>
+                </div>
+                <div className="px-10">
+                    <button className="hover:border-gray-400 hover:border-b-2 hover:pt-1" onClick={onClickRegister}>Register</button>
                 </div>
             </div>
         </div>

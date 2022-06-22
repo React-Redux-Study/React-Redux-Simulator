@@ -7,7 +7,8 @@ const error = {
     status: false,
     json: {
         error: ["연결이 원활하지 않습니다."]
-    }
+    },
+    text: null
 }
 
 const request = (url, option) => {
@@ -31,12 +32,13 @@ export const status = async(url, option)=>{
             return error;
         }
     );
+    
     return data;
 }
 
 export const response = async(url, option) => {
     const data = await status(url, option);
-    
+
     const state = data.ok;
     const code = data.status;
     const text = await data.text();
