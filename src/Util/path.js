@@ -5,3 +5,7 @@ export const splitPath = (path, index) => {
         return Number(path.split("/")[index]);
     }
 }
+
+export const classNames = (...classes) => {
+    return classes.filter(Boolean).join(' ');
+}

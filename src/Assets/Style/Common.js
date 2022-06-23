@@ -13,6 +13,7 @@ html, body {
     font-size: 100%;
     vertical-align: middle;
     height: 100vh;
+    overflow: hidden;
   }
 
   div, span, applet, object, iframe,

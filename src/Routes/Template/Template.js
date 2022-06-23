@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-import CardsComponent from "../../Components/Template/CardsComponent";
+import CardsComponent from "../../Components/Template/CardListComponent";
 
 import {
     AiOutlineDoubleLeft,
