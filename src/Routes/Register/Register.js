@@ -34,8 +34,12 @@ const Register = () => {
 
     //
     useEffect( () => {
+
+    }, []);
+    //
+    useEffect( () => {
         setSelectMeta(selectMetaList.current[0]);
-    },[selectMetaList])
+    },[selectMetaList]);
     //
     const addMirrorKey = () => {
         if(mirrorKey.length > 0){
@@ -141,7 +145,7 @@ const Register = () => {
         if(Object.keys(error).length){
            check = false; 
         }
-        //console.log(check, error);
+
         return check;
     }
     //

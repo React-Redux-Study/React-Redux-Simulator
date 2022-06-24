@@ -7,9 +7,6 @@ import { ADD_COUNT, INITIAL_COUNT } from "../../Store/Modal/ViewerStartModal";
 import { postViewer } from "../../API/Template/Viewer";
 
 const ViewerStartModalComponent = ({ value, setValue, viewerId, files }) => {
-    //
-    const [progressValue, setProgressValue] = useState(0);
-
 
     const dispatch = useDispatch();
     const { countRedux } = useSelector(state=>state.viewerStartModal);
@@ -37,18 +34,6 @@ const ViewerStartModalComponent = ({ value, setValue, viewerId, files }) => {
         }
 
     }, [countRedux])
-    // useEffect( () => {
-    //     if(progressValue){
-    //         const percent = String(parseInt(progressValue/files.length*100));
-    //         if(progressValue >= files.length){
-    //             stopInterval();
-    //         }else{
-    //             send();
-    //         }
-    //         setProgress(percent);
-    //     }
-
-    // }, [progressValue])
 
     const send = async() => {
         const response = await postViewer(
@@ -146,7 +131,6 @@ const ViewerStartModalComponent = ({ value, setValue, viewerId, files }) => {
                     </div>
                 </div>
             </>
-
         )
     )
 };
