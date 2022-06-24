@@ -34,7 +34,7 @@ const Register = () => {
 
     //
     useEffect( () => {
-        setSelectMeta(selectMetaList[0]);
+        setSelectMeta(selectMetaList.current[0]);
     },[selectMetaList])
     //
     const addMirrorKey = () => {
@@ -165,12 +165,11 @@ const Register = () => {
                 dispatch(SET_ERROR_MODAL_MESSAGE("입력 데이터가 올바르지 않습니다."));  
             }
         }
-
     }
 
     //
     return (
-        <div className="w-full px-20 py-32">
+        <div className="w-full px-44 py-32">
             <div className="bg-white p-10 shadow-md flex flex-col space-y-8">
                 <div>
                     <label className="w-full py-2 px-1 font-bold ">Title</label>

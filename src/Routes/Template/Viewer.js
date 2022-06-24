@@ -55,7 +55,7 @@ const Viewer = () => {
     return (
         <>
             <div className={classNames("w-full py-32 lg:px-44 md:px-44 px-12",
-                clickStart && ("blur-sm"), clickDelete && ("blur-sm") 
+                clickStart && (""), clickDelete && ("") 
             )}>
                 <div className="w-full shadow-md">
                     <div key="view" className="bg-white rounded p-10">
@@ -107,12 +107,15 @@ const Viewer = () => {
                 <ViewerStartModalComponent
                     value={clickStart}
                     setValue={setClickStart}
+                    viewerId={viewerId}
+                    files={files}
                 />
             }
             {
                 <ViewerDeleteModalComponent 
                     value={clickDelete}
                     setValue={setClickDelete}
+                    viewerId={viewerId}
                 />
             }
         </>

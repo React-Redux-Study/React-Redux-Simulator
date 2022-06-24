@@ -4,6 +4,7 @@ import { getDashboard } from "../../API/Template/Template";
 import CardComponent from "./CardComponent";
 
 const CardsComponent = ({props}) => {
+    
 
     const [ cardResponse, setCardResponse ] = useState([]);
 
